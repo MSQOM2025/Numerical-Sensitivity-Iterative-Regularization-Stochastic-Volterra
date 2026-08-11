@@ -1,40 +1,48 @@
-# RMWA: Robust Monitoring Wavelet Algorithm for SIVIEs
+# On the Numerical Sensitivity and Iterative Regularization of Stochastic Volterra Equations in Wavelet Bases
 
-This repository contains the official Python implementation of the Robust Monitoring Wavelet Algorithm (RMWA) for solving Stochastic Itô-Volterra Integral Equations (SIVIEs) as described in the paper: 
-> A Robust Wavelet–Krylov Method with Adaptive Stability Monitoring for Stochastic Itô–Volterra Integral Equations"
+This repository contains the official Python implementation and reproducible datasets for the **Robust Monitoring Wavelet Algorithm (RMWA)** as described in the paper:
+
+> **"On the Numerical Sensitivity and Iterative Regularization of Stochastic Volterra Equations in Wavelet Bases"**  
+> *Author: Mohsen Salehi*
+
+---
 
 ## 🚀 Overview
-Numerical solutions of SIVIEs are often challenged by ill-conditioning at high resolutions and the presence of non-Gaussian (heavy-tailed) noise. RMWA addresses these issues through:
-- **SKCW Discretization:** Second-Kind Chebyshev Wavelets with compact support.
-- **Robust Solver:** Iteratively Reweighted LSQR (IR-LSQR) with Huber M-estimation.
-- **Adaptive Monitoring:** A sensitivity index $S(M)$ that identifies the optimal truncation order $M^*$.
+High-order wavelet discretization (SKCW) for Stochastic Itô-Volterra Integral Equations (SIVIEs) fundamentally leads to **discrete ill-posed inverse problems**. This repository provides the RMWA framework, which addresses severe ill-conditioning through a synthesis of spectral and robust statistical theories:
+
+- **Mathematical Backbone:** Orthonormal Second-Kind Chebyshev Wavelets (SKCW).
+- **Solver Engine:** Huber-weighted IR-LSQR (Krylov subspace method) providing an iterative regularization effect.
+- **Data-driven Monitoring:** An adaptive sensitivity index $S(M) = \kappa(M) \cdot \text{MAD}(\text{Res})$ that detects the optimal truncation resolution level without requiring prior knowledge of the analytical exact solution.
 
 ## 📁 Repository Structure
-The repository is organized into core solvers, benchmarking suites, and application case studies:
 
 | File | Description |
 | :--- | :--- |
-| `Code1_robust_skcw_lsqr_siviey.py` | The base framework for SKCW generation and the IR-LSQR robust solver. |
-| `Updated_Code1_robust_skcw_lsqr_siviey.py` | **Primary Execution Script:** Implements Section 4 metrics (Conditioning regression, Sensitivity Index, and Monte Carlo Distribution). |
-| `Comparision_Methods.py` | Benchmark suite comparing RMWA against Standard QR, Tikhonov, and Truncated SVD regularizations. |
-| `Biological_Population_with_Cauchy_Environmental_Shocks.py` | Ecological case study involving memory effects and Cauchy-distributed environmental shocks. |
-| `RMWA_Master_Results.csv` | Summarized statistical metrics ($\kappa, S(M), MSE$) for all levels. |
-| `RMWA_Detailed_MSE_Dist.csv` | Raw 2000-path realization data used for error distribution rigor (Boxplots). |
-| `Comprehensive_Comparison_Results.csv` | Detailed benchmarking data vs competitive solvers. |
+| `Code1_robust_skcw_lsqr_siviey.py` | Functional logic for basis generation and the robust IR-LSQR solver. |
+| `Updated_Code1_robust_skcw_lsqr_siviey.py` | **Main Research Engine:** Orchestrates Monte Carlo simulations ($N=2000$), identifies optimal stopping, and exports statistical data. |
+| `Comparision_Methods.py` | Benchmark suite comparing the proposed method vs. Tikhonov and TSVD regularizations. |
+| `Biological_Population_with_Cauchy_Environmental_Shocks.py` | Real-world case study: Restoration of biological growth trends under Cauchy "heavy-tailed" shocks. |
+| `RMWA_Master_Results.csv` | Summary Table including condition numbers ($\kappa$), $S(M)$ indices, and Average MSEs. |
+| `RMWA_Detailed_MSE_Dist.csv` | Raw 2,000-path realization data used for quantile-based Confidence Intervals and Boxplot profiling. |
+| `Comprehensive_Comparison_Results.csv` | Data confirming the 16.6% accuracy gain over standard regularization schemes. |
 
-## 🛠 Prerequisites
-- **Language:** Python 3.12+
-- **Key Libraries:** `NumPy`, `SciPy`, `Pandas`, `Matplotlib`, `multiprocessing`.
-- **System Tested:** 12th Gen Intel Core i5-1235U / 16GB RAM.
+## ⚙️ Technical Environment
+- **Software:** Tested on Python 3.12+ (Requires `NumPy`, `SciPy`, `Pandas`, `Matplotlib`).
+- **Hardware Validated:** 12th Gen Intel Core i5-1235U | 16GB RAM | Parallelized MC.
 
-## 🏃 How to Run
-1. **Primary Analytics:** Execute `Updated_Code1_robust_skcw_lsqr_siviey.py` first to generate the statistical landscape of the resolution levels ($M=1$ to $9$). This will identify the optimal $M^*$ level for your problem.
-2. **Comparative Benchmarking:** Run `Comparision_Methods.py` to evaluate the 16% accuracy gain of RMWA over Tikhonov and TSVD under stochastic outliers.
-3. **Application Study:** After establishing the optimal $M^*$, run `Biological_Population_with_Cauchy_Environmental_Shocks.py` to see the algorithm's performance in a realistic biological restoration model.
+## 🏃 Execution Steps
+1. Run `Updated_Code1_robust_skcw_lsqr_siviey.py` to identify the optimal $M^*$ level through adaptive monitoring.
+2. Run `Comparision_Methods.py` for comparative stability metrics.
+3. Run `Biological_Population_with_Cauchy_Environmental_Shocks.py` for a visual proof of physical resilience.
 
-## 📈 Performance Summary
-- **Reproducibility:** Locked GLOBAL_SEED = 42 ensured across all 18,000 realization solves.
-- **Complexity:** Exploits operator separation to solve 2000 paths in ~677s (at M=9) on modern i5 hardware.
+## 📈 Key Findings
+- **Resolution-Conditioning Duality:** Captured an empirical polynomial ill-conditioning growth rate ($\alpha \approx 3.37$).
+- **Efficiency:** Mitigation of the computational bottleneck; 2000 trajectories solved in ~677s.
+- **Rigor:** Implementation of 95% Quantile-based Confidence Intervals for stochastic error reporting.
+
+## Citation
+If you use this code or find the algorithm useful for your research, please cite our paper:
+*(Citation details will be updated after official publication)*
 
 ## License
 MIT License. Feel free to use and cite our work.
