@@ -1,8 +1,8 @@
-# On the Numerical Sensitivity and Iterative Regularization of Stochastic Volterra Equations in Wavelet Bases
+# Robust Iterative Regularization and Adaptive Stopping for Discrete Ill-Posed Stochastic Volterra Systems under Heavy-Tailed Perturbations
 
 This repository contains the official Python implementation and reproducible datasets for the **Robust Monitoring Wavelet Algorithm (RMWA)** as described in the paper:
 
-> **"On the Numerical Sensitivity and Iterative Regularization of Stochastic Volterra Equations in Wavelet Bases"**  
+> **"ORobust Iterative Regularization and Adaptive Stopping for Discrete Ill-Posed Stochastic Volterra Systems under Heavy-Tailed Perturbations"**  
 > *Author: Mohsen Salehi*
 
 ---
